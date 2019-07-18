@@ -46,6 +46,7 @@ public class MultiClientTest {
      * @param message The message to be logged (printed).
      */
     private static void log(String message) {
-        System.out.println(message);
+        String threadId = "THREAD #" + Thread.currentThread().getId() + ": ";
+        System.out.println(threadId + message);
     }
 }
