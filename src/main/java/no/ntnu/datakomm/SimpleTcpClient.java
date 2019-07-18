@@ -121,7 +121,7 @@ public class SimpleTcpClient {
      *
      * @param message The message to be logged (printed).
      */
-    private void log(String message) {
+    private static void log(String message) {
         System.out.println(message);
     }
 }
