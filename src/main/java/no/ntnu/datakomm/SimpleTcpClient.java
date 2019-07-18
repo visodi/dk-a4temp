@@ -34,7 +34,7 @@ public class SimpleTcpClient {
                     log("Server responded with: " + response);
                     if (sendRequestToServer("bla+bla")) {
                         response = readResponseFromServer();
-                        if (response != null && "12".equals(response)) {
+                        if (response != null) {
                             log("Server responded with: " + response);
                             if (sendRequestToServer("game over") && closeConnection()) {
                                 log("Game over, connection closed");
