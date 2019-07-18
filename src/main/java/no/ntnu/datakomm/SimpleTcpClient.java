@@ -1,5 +1,8 @@
 package no.ntnu.datakomm;
 
+/**
+ * A Simple TCP client, used as a warm-up exercise for assignment A4.
+ */
 public class SimpleTcpClient {
     // Remote host where the server will be running
     private static final String HOST = "localhost";
@@ -8,6 +11,7 @@ public class SimpleTcpClient {
 
     /**
      * Run the TCP Client.
+     *
      * @param args Command line arguments. Not used.
      */
     public static void main(String[] args) {
@@ -30,27 +34,33 @@ public class SimpleTcpClient {
                     log("Server responded with: " + response);
                     if (sendRequestToServer("bla+bla")) {
                         response = readResponseFromServer();
-                        if (response != null) {
+                        if (response != null && "12".equals(response)) {
                             log("Server responded with: " + response);
                             if (sendRequestToServer("game over") && closeConnection()) {
                                 log("Game over, connection closed");
+                                // When the connection is closed, try to send one more message. It should fail.
+                                if (!sendRequestToServer("2+2")) {
+                                    log("Sending another message after closing the connection failed as expected");
+                                } else {
+                                    log("ERROR: sending a message after closing the connection did not fail!");
+                                }
                             } else {
-                                log("Failed to stop conversation");
+                                log("ERROR: Failed to stop conversation");
                             }
                         } else {
-                            log("Failed to receive server's response!");
+                            log("ERROR: Failed to receive server's response!");
                         }
                     } else {
-                        log("Failed to send invalid message to server!");
+                        log("ERROR: Failed to send invalid message to server!");
                     }
                 } else {
-                    log("Failed to receive server's response!");
+                    log("ERROR: Failed to receive server's response!");
                 }
             } else {
-                log("Failed to send valid message to server!");
+                log("ERROR: Failed to send valid message to server!");
             }
         } else {
-            log("Failed to connect to the server");
+            log("ERROR: Failed to connect to the server");
         }
 
         log("Simple TCP client finished");
@@ -58,6 +68,7 @@ public class SimpleTcpClient {
 
     /**
      * Close the TCP connection to the remote server.
+     *
      * @return True on success, false otherwise
      */
     private boolean closeConnection() {
@@ -66,6 +77,7 @@ public class SimpleTcpClient {
 
     /**
      * Try to establish TCP connection to the server (the three-way handshake).
+     *
      * @param host The remote host to connect to. Can be domain (localhost, ntnu.no, etc), or IP address
      * @param port TCP port to use
      * @return True when connection established, false otherwise
@@ -78,6 +90,7 @@ public class SimpleTcpClient {
 
     /**
      * Send a request message to the server (newline will be added automatically)
+     *
      * @param request The request message to send. Do NOT include the newline in the message!
      * @return True when message successfully sent, false on error.
      */
@@ -93,7 +106,9 @@ public class SimpleTcpClient {
 
     /**
      * Wait for one response from the remote server.
-     * @return The response received from the server, null on error.
+     *
+     * @return The response received from the server, null on error. The newline character is stripped away
+     * (not included in the returned value).
      */
     private String readResponseFromServer() {
         // TODO - implement this method
@@ -103,6 +118,7 @@ public class SimpleTcpClient {
 
     /**
      * Log a message to the system console.
+     *
      * @param message The message to be logged (printed).
      */
     private void log(String message) {
