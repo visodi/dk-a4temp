@@ -36,13 +36,20 @@ public class SimpleTcpClient {
 
         if (connectToServer(HOST, PORT)) {
             log("Connection to the server established");
-            if (sendRequestToServer("5+7")) {
+            int a = (int) (1 + Math.random() * 10);
+            int b = (int) (1 + Math.random() * 10);
+            String request = a + "+" + b;
+            if (sendRequestToServer(request)) {
+                log("Sent " + request + " to server");
                 String response = readResponseFromServer();
                 if (response != null) {
                     log("Server responded with: " + response);
-                    log("Sleeping a while to allow simulate long client-server connection...");
-                    Thread.sleep(2000);
-                    if (sendRequestToServer("bla+bla")) {
+                    int secondsToSleep = 2 + (int)(Math.random() * 5);
+                    log("Sleeping " + secondsToSleep + " seconds to allow simulate long client-server connection...");
+                    Thread.sleep(secondsToSleep * 1000);
+                    request = "bla+bla";
+                    if (sendRequestToServer(request)) {
+                        log("Sent " + request + " to server");
                         response = readResponseFromServer();
                         if (response != null) {
                             log("Server responded with: " + response);
