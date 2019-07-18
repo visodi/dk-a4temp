@@ -16,14 +16,22 @@ public class SimpleTcpClient {
      */
     public static void main(String[] args) {
         SimpleTcpClient client = new SimpleTcpClient();
-        client.run();
+        try {
+            client.run();
+        } catch (InterruptedException e) {
+            log("Client interrupted");
+            Thread.currentThread().interrupt();
+        }
     }
 
     /**
      * Run the TCP Client application. The logic is already implemented, no need to change anything in this method.
      * You can experiment, of course.
+     *
+     * @throws InterruptedException The method sleeps to simulate long client-server conversation.
+     *                              This exception is thrown if the execution is interrupted halfway.
      */
-    public void run() {
+    public void run() throws InterruptedException {
         log("Simple TCP client started");
 
         if (connectToServer(HOST, PORT)) {
@@ -32,6 +40,8 @@ public class SimpleTcpClient {
                 String response = readResponseFromServer();
                 if (response != null) {
                     log("Server responded with: " + response);
+                    log("Sleeping a while to allow simulate long client-server connection...");
+                    Thread.sleep(2000);
                     if (sendRequestToServer("bla+bla")) {
                         response = readResponseFromServer();
                         if (response != null) {
