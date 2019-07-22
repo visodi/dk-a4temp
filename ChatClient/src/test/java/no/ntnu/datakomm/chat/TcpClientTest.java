@@ -5,13 +5,14 @@ import no.ntnu.datakomm.chat.helpers.DummyMsgReceiver;
 import no.ntnu.datakomm.chat.helpers.DummySupportedReceiver;
 import no.ntnu.datakomm.chat.helpers.DummyUserListingReceiver;
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 public class TcpClientTest {
     // Host and port to be used for all connection in the tests
     private static final String SERVER_HOST = "datakomm.work";
     private static final int SERVER_PORT = 1310;
-    
+
     // How many ms to sleep when waiting for server response to arrive
     private static final int THREAD_SLEEP_TIME = 2000;
 
@@ -33,6 +34,7 @@ public class TcpClientTest {
     /**
      * Test if login works correctly. Note: this test can fail if several students run the same test at the same
      * time: several clients will try to use the same username.
+     *
      * @throws InterruptedException When test is interrupted while sleeping
      */
     @Test
@@ -94,6 +96,7 @@ public class TcpClientTest {
 
     /**
      * Test if sending public messages works
+     *
      * @throws InterruptedException When test is interrupted while sleeping
      */
     @Test
@@ -136,6 +139,7 @@ public class TcpClientTest {
 
     /**
      * Test if sending private messages works.
+     *
      * @throws InterruptedException When test is interrupted while sleeping
      */
     @Test
@@ -212,6 +216,7 @@ public class TcpClientTest {
 
     /**
      * Test if user listing works correctly.
+     *
      * @throws InterruptedException When test is interrupted while sleeping
      */
     @Test
@@ -265,6 +270,7 @@ public class TcpClientTest {
 
     /**
      * Test if supported command listing works correctly.
+     *
      * @throws InterruptedException When test is interrupted while sleeping
      */
     @Test
@@ -292,8 +298,6 @@ public class TcpClientTest {
         assertTrue(supported.contains("login"));
         assertTrue(supported.contains("users"));
         assertTrue(supported.contains("help"));
-//        assertTrue(userListing.contains(C2_USERNAME));
-//        assertTrue(userListing.contains(C3_USERNAME));
 
         // Disconnect all clients
         c1.disconnect();
