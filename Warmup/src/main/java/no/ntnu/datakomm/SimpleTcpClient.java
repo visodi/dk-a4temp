@@ -1,4 +1,6 @@
-package no.ntnu.datakomm;
+ package no.ntnu.datakomm;
+//import java.net.InternetSocketAddress;
+import  java.net.Socket;
 
 /**
  * A Simple TCP client, used as a warm-up exercise for assignment A4.
@@ -100,9 +102,17 @@ public class SimpleTcpClient {
      * @return True when connection established, false otherwise
      */
     private boolean connectToServer(String host, int port) {
-        // TODO - implement this method
-        // Remember to catch all possible exceptions that the Socket class can throw.
-        return false;
+       try{
+           Socket socket = new socket(host,port);
+           System.out.println("Successfull connection")
+                    // do data transfer
+           //socket.close();
+       }
+       catch (IOExeption e){
+           System.out.println("Socket error:" + e.getMessage());
+       }
+
+return false;
     }
 
     /**
@@ -118,6 +128,11 @@ public class SimpleTcpClient {
         // * Internet connection lost, timeout in transmission
         // * Connection not opened.
         // * What is the request is null or empty?
+
+        String commandToSend = "GET / HTTP/1.0\r\n\r\n";
+        OutputStream out = socket.OutputStream();
+        out.write(commandToSend.getBytes());
+
         return false;
     }
 
@@ -130,6 +145,19 @@ public class SimpleTcpClient {
     private String readResponseFromServer() {
         // TODO - implement this method
         // Similarly to other methods, exception can happen while trying to read the input stream of the TCP Socket
+
+        InputStream in = socket.getInputStream();
+        byte[] buffer = new byte[10000];
+        int bytesReceived;
+        do {
+            bytesReceived = =in.read(buffer);
+            String responsePart = new String(buffer);
+            if (bytesReceived > 0) {
+                System.out.print(responsePart);
+            }
+        }
+        while (bytesReceived > 0);
+
         return null;
     }
 
